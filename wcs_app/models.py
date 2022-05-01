@@ -40,17 +40,21 @@ class Plant (models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 class Farm (models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    status = models.IntegerField(default=0)
-    address = models.CharField(max_length=512)
-    number = models.IntegerField()
-    cep = models.IntegerField()
-    complement = models.CharField(max_length=64)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,editable=False)
+    status = models.IntegerField(default=0,editable=False)
+    address = models.CharField("Endereço",max_length=512)
+    number = models.IntegerField("Número")
+    cep = models.IntegerField("CEP")
+    complement = models.CharField("Complemento",max_length=64)
     longitude = models.FloatField()
     latitude = models.FloatField()
     ## Armazenar data de criação e atualização (automática pelo Django)
     createad = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    ## Adicionando classe "Meta" para gerenciar o dashboard
+    class Meta:
+        verbose_name = "Fazenda"
+        verbose_name_plural = "Fazendas"
 
 class Plantation (models.Model):
     farm = models.ForeignKey(Farm,on_delete=models.CASCADE)
@@ -63,6 +67,10 @@ class Plantation (models.Model):
     ## Armazenar data de criação e atualização (automática pelo Django)
     createad = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    ## Adicionando classe "Meta" para gerenciar o dashboard
+    class Meta:
+        verbose_name = "Plantação"
+        verbose_name_plural = "Plantações"
 
 class Water_Tank (models.Model):
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
@@ -72,6 +80,10 @@ class Water_Tank (models.Model):
     ## Armazenar data de criação e atualização (automática pelo Django)
     createad = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+     ## Adicionando classe "Meta" para gerenciar o dashboard
+    class Meta:
+        verbose_name = "Tanque de Água"
+        verbose_name_plural = "Tanques de Água"
 
 class Plantation_Water_Routine (models.Model):
     plantation = models.ForeignKey(Plantation,on_delete=models.CASCADE)
@@ -80,6 +92,10 @@ class Plantation_Water_Routine (models.Model):
     ## Armazenar data de criação e atualização (automática pelo Django)
     createad = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+     ## Adicionando classe "Meta" para gerenciar o dashboard
+    class Meta:
+        verbose_name = "Rotina de Irrigação"
+        verbose_name_plural = "Rotinas de Irrigação"
 
 class Audit_Water_Routine (models.Model):
     routine = models.ForeignKey(Plantation_Water_Routine, on_delete=models.CASCADE)
